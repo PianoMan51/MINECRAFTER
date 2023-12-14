@@ -10,13 +10,6 @@ let item_to_craft = document.getElementById("item_to_craft");
 
 let item_in_hand = null;
 
-let game_items = {
-    furnace: ["cobblestone", "cobblestone", "cobblestone", "cobblestone", "", "cobblestone", "cobblestone", "cobblestone", "cobblestone"],
-    stone_pickaxe: ["cobblestone", "cobblestone", "cobblestone", "", "stick", "", "", "stick", ""],
-    oak_wood_stair: ["oak_plank", "", "", "oak_plank", "oak_plank", "", "oak_plank", "oak_plank", "oak_plank",],
-    cobblestone_wall: ["", "", "", "cobblestone", "cobblestone", "cobblestone", "cobblestone", "cobblestone", "cobblestone",]
-};
-
 let currentItemIndex = 0;
 let current_item_name = Object.keys(game_items)[currentItemIndex];
 let current_item_array = game_items[current_item_name];
@@ -34,7 +27,6 @@ check_button.addEventListener("click", function () {
     }
 
     if (current_item_array.every((value, index) => value === check_table[index])) {
-        alert("yes");
         goNext();
     } else {
         alert("no");
@@ -58,14 +50,16 @@ function goNext() {
 
 crafting_table.forEach(td => {
     td.addEventListener("click", function () {
-        if (td.innerHTML !== "") {
-            td.innerHTML = "";
+        if (item_in_hand) {
+            if (td.innerHTML !== "") {
+                td.innerHTML = "";
+            } else {
+                td.innerHTML = `<img src="item_images/${item_in_hand}.png" height="80px">`;
+            }
         } else {
-            td.innerHTML = `<img src="item_images/${item_in_hand}.png" height="80px">`;
+            alert("No item chosen!")
         }
     });
-
-
 });
 
 item_buttons.forEach(item_button => {
