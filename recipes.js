@@ -1,2 +1,0 @@
-let furnace = ["cobblestone", "cobblestone", "cobblestone", "cobblestone", "", "cobblestone", "cobblestone", "cobblestone", "cobblestone"]
-let stone_pickaxe = ["cobblestone", "cobblestone", "cobblestone", "", "stick", "", "", "stick", ""]

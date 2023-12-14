@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 40%;
+    width: 800px;
     margin-right: auto;
     margin-left: auto;
     background-color: aliceblue;
@@ -18,19 +18,49 @@
 
 }
 
-#crafting td,
+.crafting_td,
 #item_to_craft {
     background-color: lightgray;
     width: 100px;
     height: 100px;
     border-radius: 5px;
+    cursor: pointer;
+    padding: 0;
+    text-align: center;
+    transition: ease-in-out.2s;
 }
 
-#crafting td {
-    cursor: pointer;
-    text-align: center;
+#item_to_craft {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 
 #crafting td:hover {
     background-color: gray;
+}
+
+#items_bar {
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#items_bar button {
+    border: none;
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+#items_bar button:hover {
+    background-color: gray;
+}
+
+
+#items_bar img {
+    height: 50px;
 }
