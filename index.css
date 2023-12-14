@@ -64,3 +64,8 @@
 #items_bar img {
     height: 50px;
 }
+
+#items_list {
+    position: absolute;
+    list-style: none;
+}

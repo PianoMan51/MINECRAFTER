@@ -1,0 +1,1 @@
+let game_items = ["furnace", "iron_pickaxe", "rail", "iron_chestplate"]
