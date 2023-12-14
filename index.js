@@ -45,6 +45,7 @@ check_button.addEventListener("click", function () {
     } else {
         alert("Incorrect recipe!");
         check_table = [];
+        checkRecipe(current_item_recipe, check_table)
     }
 
 });
@@ -142,7 +143,10 @@ crafting_table.forEach(td => {
 
 item_buttons.forEach(item_button => {
     item_button.addEventListener("click", function () {
-        item_in_hand = item_button.querySelector('img').getAttribute('src').replace('./item_images/', '').replace('.png', '');
-    })
+        item_buttons.forEach(btn => btn.classList.remove("active_item"));
 
+        item_in_hand = item_button.querySelector('img').getAttribute('src').replace('./item_images/', '').replace('.png', '');
+        item_button.classList.add("active_item");
+    });
 });
+

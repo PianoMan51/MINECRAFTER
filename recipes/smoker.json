@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "minecraft:logs"
+      "item": "minecraft:oak_log"
     },
     "X": {
       "item": "minecraft:furnace"

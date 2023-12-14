@@ -69,3 +69,7 @@
     position: absolute;
     list-style: none;
 }
+
+.active_item {
+    transform: scale(1.2);
+}
