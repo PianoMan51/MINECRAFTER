@@ -1,0 +1,36 @@
+#app {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding: 20px 30px 20px 30px
+}
+
+
+#crafting {
+    padding: 0px;
+    border-collapse: separate;
+    border-spacing: 5px;
+
+}
+
+#crafting td,
+#item_to_craft {
+    background-color: lightgray;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+#crafting td {
+    cursor: pointer;
+    text-align: center;
+}
+
+#crafting td:hover {
+    background-color: gray;
+}
