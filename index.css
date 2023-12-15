@@ -1,3 +1,8 @@
+:root {
+    --red: #e74c3c;
+    --green: #2ecc71;
+}
+
 #app {
     display: flex;
     justify-content: space-between;
@@ -8,6 +13,14 @@
     background-color: aliceblue;
     border-radius: 5px;
     padding: 20px 30px 20px 30px
+}
+
+#app.error_flash {
+    background-color: var(--red)
+}
+
+#app.success_flash {
+    background-color: var(--green);
 }
 
 

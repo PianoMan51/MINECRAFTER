@@ -1,1 +1,1 @@
-let game_items = ["wooden_pickaxe", "smoker", "furnace", "iron_pickaxe", "rail", "iron_chestplate", "blast_furnace", "smoker", "wooden_pickaxe"]
+let game_items = ["stone_axe", "stone_axe", "smoker", "furnace", "iron_pickaxe", "rail", "iron_chestplate", "blast_furnace", "smoker", "wooden_pickaxe"]

@@ -2,16 +2,20 @@ let check_button = document.getElementById("check_button");
 let item_buttons = document.querySelectorAll(".item_button");
 let item_to_craft = document.getElementById("item_to_craft");
 let crafting_table = document.querySelectorAll(".crafting_td");
+let app = document.getElementById("app");
 let check_table = [];
 let currentItemIndex = 0;
 let current_item = game_items[currentItemIndex];
-let current_item_recipe = null
+let current_item_recipe = null;
+let score = document.getElementById("points");
+let points = 0;
+score.innerHTML = points;
 item_to_craft.innerHTML = `<img src="item_images/${current_item}.png" height="80px">`;
 
 
 let item_in_hand = null;
+let active_button = null;
 let recipe_folder = null;
-
 
 function getRecipe() {
     fetch(`recipes/${current_item}.json`)
@@ -23,7 +27,6 @@ function getRecipe() {
         })
         .then(recipe => {
             current_item_recipe = recipe;
-            console.log(current_item_recipe.pattern)
         })
         .catch(error => {
             console.error('Error fetching JSON file:', error);
@@ -42,9 +45,27 @@ check_button.addEventListener("click", function () {
     }
     if (checkRecipe(current_item_recipe, check_table)) {
         goNext();
+        app.classList.add("success_flash");
+        setTimeout(function () {
+            app.classList.remove('success_flash');
+        }, 50);
+        item_in_hand = null;
+        active_button.classList.remove("active_item");
+        points++;
+        score.innerHTML = points;
     } else {
-        alert("Incorrect recipe!");
+        app.classList.add("error_flash");
+        setTimeout(function () {
+            app.classList.remove('error_flash');
+        }, 50);
+        item_in_hand = null;
+        active_button.classList.remove("active_item");
+        points--;
+        score.innerHTML = points;
         check_table = [];
+        crafting_table.forEach(td => {
+            td.innerHTML = ""
+        })
         checkRecipe(current_item_recipe, check_table)
     }
 
@@ -53,10 +74,10 @@ check_button.addEventListener("click", function () {
 function checkRecipe(recipe, input) {
 
     if (recipe.type === "minecraft:crafting_shaped") {
-        console.clear();
+        //console.clear();
         return checkShapedRecipe(recipe, input);
     } else if (recipe.type === "minecraft:crafting_shapeless") {
-        console.clear();
+        //console.clear();
         return checkShapelessRecipe(recipe, input);
     }
 
@@ -65,37 +86,75 @@ function checkRecipe(recipe, input) {
 
 function checkShapedRecipe(recipe, input) {
     let pattern = recipe.pattern;
-
     let key = recipe.key;
     let flatPattern = pattern.join('');
     let keyItems = {};
 
-    for (let i = 0; i < 9; i++) {
-        if (flatPattern[i] !== ' ') {
-            keyItems[i] = key[flatPattern[i]].item;
-        } else {
-            keyItems[i] = null;
+    let recipe_col = recipe.pattern.reduce((max, row) => Math.max(max, row.length), 0);
+
+
+
+    if (recipe_col === 2) {
+        let adjustedPattern_right = pattern.map(row => row + ' ');
+        let adjustedPattern_left = pattern.map(row => ' ' + row);
+
+        if (!checkPattern(adjustedPattern_right)) {
+            if (!checkPattern(adjustedPattern_left)) {
+                return false;
+            }
+        }
+    } else {
+        for (let i = 0; i < 9; i++) {
+            if (flatPattern[i] !== ' ') {
+                keyItems[i] = key[flatPattern[i]].item;
+            } else {
+                keyItems[i] = null;
+            }
+        }
+
+        for (let i = 0; i < 9; i++) {
+            let expectedItem = keyItems[i];
+            let actualItem = input[i] !== '' ? "minecraft:" + input[i] : '';
+
+            if (expectedItem === null && actualItem !== '') {
+                return false;
+            }
+
+            if (expectedItem !== null && expectedItem !== actualItem) {
+                return false;
+            }
         }
     }
 
-    for (let i = 0; i < 9; i++) {
-        let expectedItem = keyItems[i];
-        let actualItem = input[i] !== '' ? "minecraft:" + input[i] : '';
+    function checkPattern(pattern) {
 
-        console.log(i + " " + expectedItem + " --> " + actualItem);
-
-
-        if (expectedItem === null && actualItem !== '') {
-            return false;
+        for (let i = 0; i < 9; i++) {
+            flatPattern = pattern.join('');
+            if (flatPattern[i] !== ' ') {
+                keyItems[i] = key[flatPattern[i]].item;
+            } else {
+                keyItems[i] = null;
+            }
         }
 
-        if (expectedItem !== null && expectedItem !== actualItem) {
-            return false;
+        for (let i = 0; i < 9; i++) {
+            let expectedItem = keyItems[i];
+            let actualItem = input[i] !== '' ? "minecraft:" + input[i] : '';
+
+            if (expectedItem === null && actualItem !== '') {
+                return false;
+            }
+
+            if (expectedItem !== null && expectedItem !== actualItem) {
+                return false;
+            }
         }
+        return true;
     }
 
     return true;
 }
+
 
 function checkShapelessRecipe(recipe, input) {
     let ingredients = recipe.ingredients.map(ingredient => ingredient.item);
@@ -119,11 +178,8 @@ function goNext() {
     current_item = game_items[currentItemIndex];
     item_to_craft.innerHTML = `<img src="item_images/${current_item}.png" height="80px">`;
 
-    // Fetch the recipe for the new current item
     getRecipe();
 }
-
-
 
 getRecipe()
 
@@ -135,8 +191,6 @@ crafting_table.forEach(td => {
             } else {
                 td.innerHTML = `<img src="item_images/${item_in_hand}.png" height="80px">`;
             }
-        } else {
-            alert("No item chosen!")
         }
     });
 });
@@ -144,9 +198,8 @@ crafting_table.forEach(td => {
 item_buttons.forEach(item_button => {
     item_button.addEventListener("click", function () {
         item_buttons.forEach(btn => btn.classList.remove("active_item"));
-
         item_in_hand = item_button.querySelector('img').getAttribute('src').replace('./item_images/', '').replace('.png', '');
         item_button.classList.add("active_item");
+        active_button = item_button;
     });
 });
-
