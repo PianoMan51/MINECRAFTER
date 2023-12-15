@@ -43,7 +43,7 @@ check_button.addEventListener("click", function () {
             check_table.push('');
         }
     }
-    if (checkRecipe(current_item_recipe, check_table)) {
+    if (checkRecipeType(current_item_recipe, check_table)) {
         goNext();
         app.classList.add("success_flash");
         setTimeout(function () {
@@ -66,12 +66,12 @@ check_button.addEventListener("click", function () {
         crafting_table.forEach(td => {
             td.innerHTML = ""
         })
-        checkRecipe(current_item_recipe, check_table)
+        checkRecipeType(current_item_recipe, check_table)
     }
 
 });
 
-function checkRecipe(recipe, input) {
+function checkRecipeType(recipe, input) {
 
     if (recipe.type === "minecraft:crafting_shaped") {
         //console.clear();
@@ -92,44 +92,38 @@ function checkShapedRecipe(recipe, input) {
 
     let recipe_col = recipe.pattern.reduce((max, row) => Math.max(max, row.length), 0);
 
-
-
     if (recipe_col === 2) {
         let adjustedPattern_right = pattern.map(row => row + ' ');
         let adjustedPattern_left = pattern.map(row => ' ' + row);
 
-        if (!checkPattern(adjustedPattern_right)) {
-            if (!checkPattern(adjustedPattern_left)) {
-                return false;
-            }
-        }
-    } else {
-        for (let i = 0; i < 9; i++) {
-            if (flatPattern[i] !== ' ') {
-                keyItems[i] = key[flatPattern[i]].item;
-            } else {
-                keyItems[i] = null;
-            }
-        }
-
-        for (let i = 0; i < 9; i++) {
-            let expectedItem = keyItems[i];
-            let actualItem = input[i] !== '' ? "minecraft:" + input[i] : '';
-
-            if (expectedItem === null && actualItem !== '') {
-                return false;
-            }
-
-            if (expectedItem !== null && expectedItem !== actualItem) {
+        if (!checkPattern(adjustedPattern_right.join(''))) {
+            if (!checkPattern(adjustedPattern_left.join(''))) {
                 return false;
             }
         }
     }
 
-    function checkPattern(pattern) {
+    else if (recipe_col === 1) {
+        let adjustedPattern_right = pattern.map(row => row + '  ');
+        let adjustedPattern_left = pattern.map(row => '  ' + row);
+        let adjustedPattern_middle = pattern.map(row => ' ' + row + ' ')
+
+        if (!checkPattern(adjustedPattern_right.join(''))) {
+            if (!checkPattern(adjustedPattern_left.join(''))) {
+                if (!checkPattern(adjustedPattern_middle.join(''))) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    else {
+        checkPattern(flatPattern)
+    }
+
+    function checkPattern(flatPattern) {
 
         for (let i = 0; i < 9; i++) {
-            flatPattern = pattern.join('');
             if (flatPattern[i] !== ' ') {
                 keyItems[i] = key[flatPattern[i]].item;
             } else {
@@ -151,10 +145,8 @@ function checkShapedRecipe(recipe, input) {
         }
         return true;
     }
-
     return true;
 }
-
 
 function checkShapelessRecipe(recipe, input) {
     let ingredients = recipe.ingredients.map(ingredient => ingredient.item);
