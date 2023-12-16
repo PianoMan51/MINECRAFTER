@@ -1,8 +1,13 @@
 let check_button = document.getElementById("check_button");
 let item_buttons = document.querySelectorAll(".item_button");
+let tool_buttons = document.querySelectorAll(".tool_resource");
+let resource_buttons = document.querySelectorAll(".item_resource");
+let item_bar = document.getElementById("items_bar")
 let item_to_craft = document.getElementById("item_to_craft");
 let crafting_table = document.querySelectorAll(".crafting_td");
-let app = document.getElementById("app");
+let crafting_section = document.getElementById("crafting_section");
+let nav_buttons = document.querySelectorAll(".nav_button")
+let sections = document.querySelectorAll(".section")
 let check_table = [];
 let currentItemIndex = 0;
 let current_item = game_items[currentItemIndex];
@@ -14,8 +19,94 @@ score.innerHTML = points;
 item_to_craft.innerHTML = `<img src="item_images/${current_item}.png" height="80px">`;
 
 let item_in_hand = null;
-let active_button = null;
+let active_inv_item = null;
+let active_res_tool = null;
 let recipe_folder = null;
+
+fillItembar()
+
+crafting_table.forEach((td) => {
+    td.addEventListener("click", function () {
+        if (item_in_hand) {
+            if (td.innerHTML !== "") {
+                td.innerHTML = "";
+            } else {
+                td.innerHTML = `<img src="item_images/${item_in_hand}.png" height="80px">`;
+            }
+        }
+    });
+});
+
+item_buttons.forEach((item_button) => {
+    item_button.addEventListener("click", function () {
+        if (item_button.classList.contains("active_item")) {
+            item_button.classList.remove("active_item");
+        } else {
+            item_buttons.forEach((btn) => btn.classList.remove("active_item"));
+            item_in_hand = item_button
+                .querySelector("img")
+                .getAttribute("src")
+                .replace("./item_images/", "")
+                .replace(".png", "");
+            item_button.classList.add("active_item");
+            active_inv_item = item_button;
+        }
+    });
+});
+
+tool_buttons.forEach((tools) => {
+    tools.addEventListener("click", function () {
+        if (tools.classList.contains("active_item")) {
+            tools.classList.remove("active_item");
+        } else {
+            tool_buttons.forEach((btn) => btn.classList.remove("active_item"));
+            item_in_hand = tools
+                .querySelector("img")
+                .getAttribute("src")
+                .replace("./item_images/", "")
+                .replace(".png", "");
+            tools.classList.add("active_item");
+            active_res_tool = tools;
+        }
+    })
+});
+
+nav_buttons.forEach((button) => {
+    button.addEventListener("click", function () {
+        sections.forEach(section => {
+            section.style.display = "none";
+        })
+
+        let direction = Array.from(button.classList)[1];
+        document.getElementById(direction).style.display = "flex"
+
+    })
+
+});
+
+resource_buttons.forEach((resource_button) => {
+    resource_button.addEventListener("click", function () {
+        if (active_res_tool) {
+            let tool = active_res_tool.classList;
+            let resource = resource_button.classList;
+
+            if (tool.contains("resource_axe") && resource.contains("resource_axe")) {
+                console.log("Wood cut")
+            }
+            if (tool.contains("resource_pickaxe") && resource.contains("resource_pickaxe")) {
+                console.log("Stone mined")
+            }
+            if (tool.contains("resource_shovel") && resource.contains("resource_shovel")) {
+                console.log("Dirt shoveled")
+            }
+
+
+        } else {
+            console.log("hand ouch")
+        }
+
+    })
+})
 
 function getRecipe() {
     fetch(`recipes/${current_item}.json`)
@@ -48,22 +139,22 @@ check_button.addEventListener("click", function () {
     }
     if (checkRecipeType(current_item_recipe, check_table)) {
         goNext();
-        app.classList.add("success_flash");
+        crafting_section.classList.add("success_flash");
         setTimeout(function () {
-            app.classList.remove("success_flash");
+            crafting_section.classList.remove("success_flash");
         }, 50);
         item_in_hand = null;
-        active_button.classList.remove("active_item");
+        active_inv_item.classList.remove("active_item");
         points++;
         score.innerHTML = points;
     } else {
-        app.classList.add("error_flash");
+        crafting_section.classList.add("error_flash");
         setTimeout(function () {
-            app.classList.remove("error_flash");
+            crafting_section.classList.remove("error_flash");
         }, 50);
         item_in_hand = null;
-        if (active_button) {
-            active_button.classList.remove("active_item");
+        if (active_inv_item) {
+            active_inv_item.classList.remove("active_item");
         }
         life--;
         removeLife()
@@ -188,33 +279,6 @@ function goNext() {
     getRecipe();
 }
 
-getRecipe();
-
-crafting_table.forEach((td) => {
-    td.addEventListener("click", function () {
-        if (item_in_hand) {
-            if (td.innerHTML !== "") {
-                td.innerHTML = "";
-            } else {
-                td.innerHTML = `<img src="item_images/${item_in_hand}.png" height="80px">`;
-            }
-        }
-    });
-});
-
-item_buttons.forEach((item_button) => {
-    item_button.addEventListener("click", function () {
-        item_buttons.forEach((btn) => btn.classList.remove("active_item"));
-        item_in_hand = item_button
-            .querySelector("img")
-            .getAttribute("src")
-            .replace("./item_images/", "")
-            .replace(".png", "");
-        item_button.classList.add("active_item");
-        active_button = item_button;
-    });
-});
-
 function removeLife() {
     let hearts = document.getElementById("health_bar");
     hearts.innerHTML = ""
@@ -247,4 +311,13 @@ function gameOver() {
 
 }
 
-removeLife()
+function fillItembar() {
+    for (let i = 0; i < 63; i++) {
+        let item = document.createElement("button");
+        item.classList.add("item_button")
+        item_bar.append(item)
+    }
+}
+
+removeLife();
+getRecipe();

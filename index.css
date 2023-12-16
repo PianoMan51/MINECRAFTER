@@ -6,11 +6,30 @@
     --darkgray: #7f8c8d;
 }
 
-#app {
-    display: flex;
+
+#crafting_section {
+    display: none;
     justify-content: space-between;
     align-items: center;
+}
+
+#resources_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#resources_section button {
+    cursor: pointer;
+}
+
+#furnace_section {
+    display: none;
+}
+
+.section {
     width: 800px;
+    height: 320px;
     margin-right: auto;
     margin-left: auto;
     background-color: var(--lightgray);
@@ -18,11 +37,11 @@
     padding: 20px 30px 20px 30px
 }
 
-#app.error_flash {
+.section.error_flash {
     background-color: var(--red)
 }
 
-#app.success_flash {
+.section.success_flash {
     background-color: var(--green);
 }
 
@@ -59,30 +78,35 @@
 
 #items_bar {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: var(--lightgray);
     margin-left: auto;
     margin-right: auto;
-    gap: 5px;
+    gap: 8px;
     width: 800px;
+    height: 500px;
     border-radius: 5px;
     margin-top: 20px;
+    padding: 20px 30px 20px 30px;
+    overflow: scroll;
 }
 
-#items_bar button {
+#items_bar::-webkit-scrollbar {
+    display: none;
+}
+
+.item_button {
     border: none;
-    background-color: var(--lightgray);
+    background-color: var(--gray);
     cursor: pointer;
     width: 80px;
     height: 80px;
     border-radius: 5px;
 }
 
-#items_bar button:hover {
-    background-color: var(--gray);
-}
 
-
-#items_bar img {
+.item_button img {
     height: 50px;
 }
 
@@ -97,9 +121,11 @@
 }
 
 .active_item {
-    transform: scale(1.2);
+    transform: scale(1.1);
+    background-color: var(--green);
     transition: 0.2s;
 }
+
 
 #health_bar {
     background-color: var(--lightgray);
@@ -116,4 +142,45 @@
 .heart img,
 .heart_empty img {
     height: 54px;
+}
+
+#nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 10;
+}
+
+.item_resource {
+    border: none;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+.item_resource img,
+.tool_resource img {
+    height: 90px;
+    width: 90px;
+}
+
+.tool_resource {
+    border: none;
+    border-radius: 5px;
+    transform: scale(1);
+    transition: 0.2s;
+}
+
+
+#resources_tools {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    margin: 0px auto 0px auto;
+}
+
+#resources_blocks {
+    display: flex;
+    justify-content: space-between;
 }

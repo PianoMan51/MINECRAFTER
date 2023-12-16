@@ -10,20 +10,36 @@
 <body>
     <h1>Minecrafter</h1>
 
-    <div id="health_bar">
-        <!--         <div class="hearts full"><img src="heart.png"></div>
-        <div class="hearts full"><img src="heart.png"></div>
-        <div class="hearts full"><img src="heart.png"></div>
-        <div class="hearts full"><img src="heart.png"></div>
-        <div class="hearts full"><img src="heart.png"></div>
-        <div class="hearts full"><img src="heart.png"></div>
-        <div class="hearts full"><img src="heart.png"></div>
-        <div class="hearts full"><img src="heart.png"></div>
-        <div class="hearts full"><img src="heart.png"></div>
-        <div class="hearts full"><img src="heart.png"></div> -->
+    <div id="health_bar"></div>
+
+    <div id="nav">
+        <button class="nav_button resources_section">Ressources</button>
+        <button class="nav_button crafting_section">Crafting table</button>
+        <button class="nav_button furnace_section">Furnace</button>
     </div>
 
-    <div id="app">
+
+    <div class="section" id="resources_section">
+        <div id="resources_blocks">
+            <button class="item_resource resource_axe"><img src="./item_faces/oak_log.png"></button>
+            <button class="item_resource resource_pickaxe"><img src="./item_faces/stone.png"></button>
+            <button class="item_resource resource_shovel"><img src="./item_faces/sand.png"></button>
+            <button class="item_resource resource_pickaxe"><img src="./item_faces/coal_ore.png"></button>
+            <button class="item_resource resource_pickaxe"><img src="./item_faces/iron_ore.png"></button>
+            <button class="item_resource resource_pickaxe"><img src="./item_faces/redstone.png"></button>
+            <button class="item_resource resource_pickaxe"><img src="./item_faces/gold_ore.png"></button>
+            <button class="item_resource resource_pickaxe"><img src="./item_faces/diamond_ore.png"></button>
+        </div>
+
+        <div id="resources_tools">
+            <button class="tool_resource resource_pickaxe"><img src="./item_images/iron_pickaxe.png"></button>
+            <button class="tool_resource resource_axe"><img src="./item_images/iron_axe.png"></button>
+            <button class="tool_resource resource_shovel"><img src="./item_images/iron_shovel.png"></button>
+        </div>
+
+    </div>
+
+    <div class="section" id="crafting_section">
 
         <table id="crafting">
             <tr>
@@ -47,17 +63,13 @@
         <div id="item_to_craft"></div>
     </div>
 
+    <div class="section" id="furnace_section">
+
+    </div>
+
+
+
     <div id="items_bar">
-        <button class="item_button"><img src="./item_images/cobblestone.png"></button>
-        <button class="item_button"><img src="./item_images/stick.png"></button>
-        <button class="item_button"><img src="./item_images/oak_plank.png"></button>
-        <button class="item_button"><img src="./item_images/iron_ingot.png"></button>
-        <button class="item_button"><img src="./item_images/oak_log.png"></button>
-        <button class="item_button"><img src="./item_images/wool.png"></button>
-        <button class="item_button"><img src="./item_images/smooth_stone.png"></button>
-        <button class="item_button"><img src="./item_images/furnace.png"></button>
-        <button class="item_button"><img src="./item_images/redstone.png"></button>
-        <button class="item_button"><img src="./item_images/gold_ingot.png"></button>
     </div>
 
     <span id="points"></span>
