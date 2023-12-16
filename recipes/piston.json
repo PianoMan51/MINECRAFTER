@@ -9,7 +9,7 @@
       "item": "minecraft:redstone"
     },
     "T": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:oak_plank"
     },
     "X": {
       "item": "minecraft:iron_ingot"

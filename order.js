@@ -1,1 +1,20 @@
-let game_items = ["stone_shovel", "stone_sword", "stone_axe", "stone_axe", "smoker", "furnace", "iron_pickaxe", "rail", "iron_chestplate", "blast_furnace", "smoker", "wooden_pickaxe"]
+let game_items = [
+  "piston",
+  "powered_rail",
+  "iron_chestplate",
+  "stone_shovel",
+  "powered_rail",
+  "wooden_pickaxe",
+  "red_bed",
+  "stone_shovel",
+  "stone_sword",
+  "stone_axe",
+  "smoker",
+  "furnace",
+  "iron_pickaxe",
+  "rail",
+  "iron_chestplate",
+  "blast_furnace",
+  "smoker",
+  "wooden_pickaxe",
+];

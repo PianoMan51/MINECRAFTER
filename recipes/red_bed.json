@@ -4,10 +4,10 @@
   "group": "bed",
   "key": {
     "#": {
-      "item": "minecraft:red_wool"
+      "item": "minecraft:wool"
     },
     "X": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:oak_plank"
     }
   },
   "pattern": [
