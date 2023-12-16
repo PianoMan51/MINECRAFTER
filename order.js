@@ -1,4 +1,7 @@
 let game_items = [
+  "stone_shovel",
+  "stone_sword",
+  "stone_axe",
   "piston",
   "powered_rail",
   "iron_chestplate",
