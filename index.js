@@ -1,8 +1,8 @@
 let check_button = document.getElementById("check_button");
-let item_buttons = document.querySelectorAll(".item_button");
+let inventory_slots = document.querySelectorAll(".slot");
 let tool_buttons = document.querySelectorAll(".tool_resource");
 let resource_buttons = document.querySelectorAll(".item_resource");
-let item_bar = document.getElementById("items_bar")
+let inventory = document.getElementById("inventory")
 let item_to_craft = document.getElementById("item_to_craft");
 let crafting_table = document.querySelectorAll(".crafting_td");
 let crafting_section = document.getElementById("crafting_section");
@@ -37,12 +37,12 @@ crafting_table.forEach((td) => {
     });
 });
 
-item_buttons.forEach((item_button) => {
+inventory_slots.forEach((item_button) => {
     item_button.addEventListener("click", function () {
         if (item_button.classList.contains("active_item")) {
             item_button.classList.remove("active_item");
         } else {
-            item_buttons.forEach((btn) => btn.classList.remove("active_item"));
+            inventory_slots.forEach((slot) => slot.classList.remove("active_item"));
             item_in_hand = item_button
                 .querySelector("img")
                 .getAttribute("src")
@@ -84,29 +84,56 @@ nav_buttons.forEach((button) => {
 
 });
 
-resource_buttons.forEach((resource_button) => {
-    resource_button.addEventListener("click", function () {
+resource_buttons.forEach((resource) => {
+    resource.addEventListener("click", function () {
+
+
         if (active_res_tool) {
             let tool = active_res_tool.classList;
-            let resource = resource_button.classList;
+            let res_output = null;
 
-            if (tool.contains("resource_axe") && resource.contains("resource_axe")) {
-                console.log("Wood cut")
-            }
-            if (tool.contains("resource_pickaxe") && resource.contains("resource_pickaxe")) {
-                console.log("Stone mined")
-            }
-            if (tool.contains("resource_shovel") && resource.contains("resource_shovel")) {
-                console.log("Dirt shoveled")
-            }
+            if (tool.contains("resource_axe") && resource.classList.contains("resource_axe")) {
+                if (resource.id === "res_oak") {
+                    res_output = "oak_plank"
+                }
 
-
+            }
+            if (tool.contains("resource_pickaxe") && resource.classList.contains("resource_pickaxe")) {
+                if (resource.id === "res_stone") {
+                    res_output = "cobblestone"
+                }
+                if (resource.id === "res_coal_ore") {
+                    res_output = "coal"
+                }
+                if (resource.id === "res_iron_ore") {
+                    res_output = "iron"
+                }
+                if (resource.id === "res_redstone_ore") {
+                    res_output = "redstone"
+                }
+                if (resource.id === "res_gold_ore") {
+                    res_output = "gold"
+                }
+                if (resource.id === "res_diamond_ore") {
+                    res_output = "diamond"
+                }
+            }
+            if (tool.contains("resource_shovel") && resource.classList.contains("resource_shovel")) {
+                if (resource.id === "res_sand") {
+                    res_output = "sand"
+                }
+            }
+            fillInventory(res_output);
         } else {
             console.log("hand ouch")
         }
 
     })
 })
+
+function fillInventory(output) {
+    console.log(output)
+}
 
 function getRecipe() {
     fetch(`recipes/${current_item}.json`)
@@ -313,9 +340,9 @@ function gameOver() {
 
 function fillItembar() {
     for (let i = 0; i < 63; i++) {
-        let item = document.createElement("button");
-        item.classList.add("item_button")
-        item_bar.append(item)
+        let slot = document.createElement("button");
+        slot.classList.add("slot")
+        inventory.append(slot)
     }
 }
 

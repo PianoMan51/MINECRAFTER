@@ -76,7 +76,7 @@
     background-color: var(--darkgray);
 }
 
-#items_bar {
+#inventory {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -92,11 +92,11 @@
     overflow: scroll;
 }
 
-#items_bar::-webkit-scrollbar {
+#inventory::-webkit-scrollbar {
     display: none;
 }
 
-.item_button {
+.slot {
     border: none;
     background-color: var(--gray);
     cursor: pointer;
@@ -106,7 +106,7 @@
 }
 
 
-.item_button img {
+.slot img {
     height: 50px;
 }
 
@@ -115,7 +115,7 @@
     list-style: none;
 }
 
-.item_button {
+.slot {
     transform: scale(1);
     transition: 0.2s;
 }
