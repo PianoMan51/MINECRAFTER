@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:oak_plank"
     }
   },
   "pattern": [

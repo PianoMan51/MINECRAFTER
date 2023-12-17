@@ -38,19 +38,22 @@ crafting_table.forEach((td) => {
   });
 });
 
-inventory_slots.forEach((item_button) => {
-  item_button.addEventListener("click", function () {
-    if (item_button.classList.contains("active_item")) {
-      item_button.classList.remove("active_item");
+inventory_items.forEach((inv_item) => {
+  inv_item.addEventListener("click", function () {
+    if (inv_item.parentNode.classList.contains("active_item")) {
+      inv_item.parentNode.classList.remove("active_item");
     } else {
-      inventory_slots.forEach((slot) => slot.classList.remove("active_item"));
-      item_in_hand = item_button
+      inventory_items.forEach((inv_item) =>
+        inv_item.parentNode.classList.remove("active_item")
+      );
+      item_in_hand = inv_item
         .querySelector("img")
         .getAttribute("src")
-        .replace("./item_images/", "")
+        .replace("item_images/", "")
         .replace(".png", "");
-      item_button.classList.add("active_item");
-      active_inv_item = item_button;
+      console.log(inv_item.querySelector("img").getAttribute("src"));
+      inv_item.parentNode.classList.add("active_item");
+      active_inv_item = inv_item.parentNode;
     }
   });
 });
@@ -94,7 +97,7 @@ resource_buttons.forEach((resource) => {
         resource.classList.contains("resource_axe")
       ) {
         if (resource.id === "res_oak") {
-          res_output = "oak_log";
+          res_output = "oak_plank";
         }
       }
       if (
