@@ -22,18 +22,20 @@ score.innerHTML = points;
 item_to_craft.innerHTML = `<img src="item_images/${current_item}.png" height="80px">`;
 
 let item_in_hand = null;
-let active_inv_item = null;
 let active_res_tool = null;
 let recipe_folder = null;
 
 crafting_table.forEach((td) => {
   td.addEventListener("click", function () {
+    console.log(td)
     if (item_in_hand) {
-      if (td.innerHTML !== "") {
-        td.innerHTML = "";
-      } else {
+      if (td.innerHTML === "") {
         td.innerHTML = `<img src="item_images/${item_in_hand}.png" height="80px">`;
+      } else {
+        td.innerHTML = "";
       }
+    } else {
+      td.innerHTML = "";
     }
   });
 });
@@ -42,18 +44,14 @@ inventory_items.forEach((inv_item) => {
   inv_item.addEventListener("click", function () {
     if (inv_item.parentNode.classList.contains("active_item")) {
       inv_item.parentNode.classList.remove("active_item");
+      item_in_hand = null;
     } else {
       inventory_items.forEach((inv_item) =>
         inv_item.parentNode.classList.remove("active_item")
       );
-      item_in_hand = inv_item
-        .querySelector("img")
-        .getAttribute("src")
-        .replace("item_images/", "")
-        .replace(".png", "");
-      console.log(inv_item.querySelector("img").getAttribute("src"));
+      item_in_hand = null;
+      item_in_hand = inv_item.querySelector("img").getAttribute("src").replace("item_images/", "").replace(".png", "");
       inv_item.parentNode.classList.add("active_item");
-      active_inv_item = inv_item.parentNode;
     }
   });
 });
@@ -79,6 +77,7 @@ nav_buttons.forEach((button) => {
   button.addEventListener("click", function () {
     sections.forEach((section) => {
       section.style.display = "none";
+      item_in_hand = null;
     });
 
     let direction = Array.from(button.classList)[1];
@@ -92,17 +91,13 @@ resource_buttons.forEach((resource) => {
       let tool = active_res_tool.classList;
       let res_output = null;
 
-      if (
-        tool.contains("resource_axe") &&
-        resource.classList.contains("resource_axe")
+      if (tool.contains("resource_axe") && resource.classList.contains("resource_axe")
       ) {
         if (resource.id === "res_oak") {
-          res_output = "oak_plank";
+          res_output = "oak_log";
         }
       }
-      if (
-        tool.contains("resource_pickaxe") &&
-        resource.classList.contains("resource_pickaxe")
+      if (tool.contains("resource_pickaxe") && resource.classList.contains("resource_pickaxe")
       ) {
         if (resource.id === "res_stone") {
           res_output = "cobblestone";
@@ -200,7 +195,7 @@ check_button.addEventListener("click", function () {
       crafting_section.classList.remove("success_flash");
     }, 50);
     item_in_hand = null;
-    active_inv_item.classList.remove("active_item");
+    //active_inv_item.classList.remove("active_item");
     points++;
     score.innerHTML = points;
   } else {
@@ -209,9 +204,9 @@ check_button.addEventListener("click", function () {
       crafting_section.classList.remove("error_flash");
     }, 50);
     item_in_hand = null;
-    if (active_inv_item) {
-      active_inv_item.classList.remove("active_item");
-    }
+    //if (active_inv_item) {
+    //   active_inv_item.classList.remove("active_item");
+    //}
     life--;
     removeLife();
     score.innerHTML = points;
