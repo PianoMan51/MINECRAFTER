@@ -60,6 +60,7 @@ tool_buttons.forEach((tools) => {
   tools.addEventListener("click", function () {
     if (tools.classList.contains("active_item")) {
       tools.classList.remove("active_item");
+      active_res_tool = null;
     } else {
       tool_buttons.forEach((btn) => btn.classList.remove("active_item"));
       item_in_hand = tools
@@ -86,10 +87,10 @@ nav_buttons.forEach((button) => {
 });
 
 resource_buttons.forEach((resource) => {
+  let res_output = null;
   resource.addEventListener("click", function () {
     if (active_res_tool) {
       let tool = active_res_tool.classList;
-      let res_output = null;
 
       if (tool.contains("resource_axe") && resource.classList.contains("resource_axe")
       ) {
@@ -128,7 +129,16 @@ resource_buttons.forEach((resource) => {
       }
       fillInventory(res_output);
     } else {
-      console.log("hand ouch");
+      if (resource.id === "res_oak") {
+        res_output = "oak_log"
+        fillInventory(res_output);
+      }
+      if (resource.id === "res_sand") {
+        res_output = "sand"
+        fillInventory(res_output);
+      } else {
+        console.log("No tool")
+      }
     }
   });
 });
@@ -358,6 +368,15 @@ function gameOver() {
   life = 10;
   removeLife();
   currentItemIndex = 0;
+  item_in_hand = null;
+  active_res_tool = null;
+
+  for (let i = 0; i < inventory_slots.length; i++) {
+    inventory_items[i].innerHTML = null;
+    item_counter[i] = null;
+    inventory_counters[i].innerHTML = null;
+  }
+
 }
 
 removeLife();

@@ -187,6 +187,9 @@
 
 .slot_counter {
     position: absolute;
-    bottom: 5px;
-    left: 5px;
+    bottom: 1px;
+    right: 1px;
+    font-family: 'MinecraftiaRegular';
+    color: white;
+    font-size: 20px;
 }
